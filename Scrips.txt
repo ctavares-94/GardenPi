@@ -1,0 +1,350 @@
+[8:33 PM] riffautae: So your GPIO Library, like the RPi.GPIO import you have at the top of the file, is the interface to your hardware. You prob have a relay on one of your rpi outputs. you need to use this library to tell the rpi to turn that output on or off.
+[8:34 PM] riffautae: the web page for the library describes how to do this https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/
+[8:36 PM] riffautae: the basics seem to be that you need to configure your "General Purpose I/O" aka GPIO as an output. Since as a General Purpose IO it can be any number of things. Then simply set the value of the pin
+
+
+for R in RELAY
+    GPIO.output(R, GPIO.OUT)
+    GPIO.output(R, GPIO.HIGH)
+
+
+
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+# Set relay pins as output
+GPIO.setup(18, GPIO.OUT)
+
+# read data using pin 4
+instance = Adafruit_DHT.DHT22 (4)
+
+while True:
+    result = instance.read(Adafruit_DHT.DHT22, 4)
+    tempHI = 26
+    tempLOW = 25
+    print(result.temperature)
+    if result.is_valid():
+        if (result.temperature) > tempHI:
+            GPIO.output(21, GPIO.HIGH) #turn GPIO pin 21 on
+        elif (result.temperature) < tempLOW:
+            GPIO.output(21, GPIO.LOW) #Turn GPIO pin 21 off
+    time.sleep(1)
+
+
+---------------------------------------------------------------------------------
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+# Set relay pins as output
+GPIO.setup(18, GPIO.OUT)
+
+sensor = Adafruit_DHT.DHT22
+# read data using pin 4
+instance = Adafruit_DHT.read_retry(sensor, 4)
+
+while True:
+    value = Adafruit_DHT.read_retry(sensor, 4)
+    tempHI = 26
+    tempLOW = 25
+    print(result.temperature)
+    if result.is_valid():
+        if (result.temperature) > tempHI:
+            GPIO.output(18, GPIO.HIGH) #turn GPIO pin 18 on
+        elif (result.temperature) < tempLOW:
+            GPIO.output(18, GPIO.LOW) #Turn GPIO pin 18 off
+    time.sleep(1)
+
+
+=============================================
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+# Set relay pins as output
+GPIO.setup(18, GPIO.OUT)
+
+
+sensor = Adafruit_DHT.DHT22
+# read data using pin 4
+instance = Adafruit_DHT.read_retry(sensor, 4)
+
+
+while True:
+    result = Adafruit_DHT.read_retry(sensor, 4)
+    tempHI = 26
+    tempLOW = 25
+    print(result.temperature)
+    if result.is_valid():
+        if (result.temperature) > tempHI:
+            GPIO.output(18, GPIO.HIGH) #turn GPIO pin 18 on
+        elif (result.temperature) < tempLOW:
+            GPIO.output(18, GPIO.LOW) #Turn GPIO pin 18 off
+    time.sleep(1)
+=====================
+
+
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+# Set relay pins as output
+GPIO.setup(18, GPIO.OUT)
+
+sensor = Adafruit_DHT.DHT22
+# read data using pin 4
+pin = 4
+instance = Adafruit_DHT.read_retry(sensor, pin)
+
+while True:
+    result = instance.read()
+    tempHI = 26
+    tempLOW = 25
+    print(result.temperature)
+    if result.is_valid():
+        if (result.temperature) > tempHI:
+            GPIO.output(18, GPIO.HIGH) #turn GPIO pin 18 on
+        elif (result.temperature) < tempLOW:
+            GPIO.output(18, GPIO.LOW) #Turn GPIO pin 18 off
+    time.sleep(1)
+
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+# initialize GPIO
+GPIO.setmode(GPIO.BCM)
+
+# Set relay pins as output
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.HIGH)
+
+sensor = Adafruit_DHT.DHT22
+# read data using pin 4
+pin = 4
+instance = Adafruit_DHT.read_retry(sensor, pin)
+print (instance)
+
+ GPIO.output(14, GPIO.LOW)
+  # Reset GPIO settings
+  GPIO.cleanup()
+
+
+
+======================================================
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+pinList = [18]
+
+# initialize GPIO
+GPIO.setmode(GPIO.BCM)
+
+
+for i in pinList:
+    GPIO.setup(i, GPIO.OUT)
+    GPIO.output(i, GPIO.HIGH)
+
+sensor = Adafruit_DHT.DHT22
+# read data using pin 4
+pin = 4
+instance = Adafruit_DHT.read_retry(sensor, pin)
+print (instance)[0]
+
+# Reset GPIO settings
+GPIO.cleanup()
+
+
+
+================================================================
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+pinList = [18]
+
+# initialize GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+
+for i in pinList:
+    GPIO.setup(i, GPIO.OUT)
+    GPIO.output(i, GPIO.HIGH)
+
+
+# read data using pin 4
+sensor = Adafruit_DHT.DHT22
+pin = 4
+
+# set temps
+temp1 = '18.5'
+temp2 = '20.5'
+
+#pull data from sensor
+humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+
+
+if  humidity is not None and temperature is not None:
+    print('Temp={0:0.1f}C  Humidity={1:0.1f}%'.format(temperature, humidity))
+
+if  Temp1 <= temp1:
+    GPIO.output(18, GPIO.HIGH) # on
+
+if  Temp2 >= temp2:
+    GPIO.output(18, GPIO.LOW) # out
+
+else:
+    print('Failed to get reading. Try again!')
+    sys.exit(1)
+
+GPIO.cleanup()
+
+
+
+
+
+#!/usr/bin/python
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+# init list with pin numbers
+
+pinList = [18]
+
+# loop through pins and set mode and state to 'low'
+
+for i in pinList: 
+    GPIO.setup(i, GPIO.OUT) 
+    GPIO.output(i, GPIO.HIGH)
+
+# time to sleep between operations 18Hrs ON 
+
+SleepTimeL = 300
+
+# main loop
+
+try:
+  GPIO.output(18, GPIO.LOW)
+  time.sleep(SleepTimeL); 
+  GPIO.cleanup()
+
+# End program cleanly with keyboard
+except KeyboardInterrupt:
+
+  # Reset GPIO settings
+  GPIO.cleanup()#!/usr/bin/env python
+
+================================================
+
+ON & OFF LOOP
+import RPi.GPIO as GPIO
+import time
+
+
+# initialize GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18, GPIO.OUT, initial=GPIO.LOW)                 
+relay = 18
+
+                 
+while True:
+    GPIO.output(relay, GPIO.LOW) # on
+    print("turning on relay")
+    time.sleep(1)
+    GPIO.output(relay, GPIO.HIGH) #OFF
+    print("turning off relay")
+    time.sleep(1)
+                 
+GPIO.cleanup()
+
+---------------------------
+
+
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import time
+
+
+# initialize GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18, GPIO.OUT)        
+relay = 18
+
+# read data using pin 4
+sensor = Adafruit_DHT.DHT22
+pin = 4
+
+# set temps
+temp1 = 22
+temp2 = 30
+
+#pull data from sensor
+instance = Adafruit_DHT.read_retry(sensor, pin)
+
+Temp = instance[1]
+
+print (Temp)
+
+                 
+if Temp <= temp1:
+    GPIO.output(relay, GPIO.LOW) # on
+    print("turning on relay")
+                 
+if Temp >= temp2:
+    GPIO.output(relay, GPIO.HIGH) # out
+    print("turning off relay")
+
+
+time.sleep(5)
+GPIO.cleanup()
+
+
+

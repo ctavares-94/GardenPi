@@ -1,0 +1,13 @@
+# Garden Watering Cycle 5:00 Monday,Wednesday,Friday
+0 5 * * 1,3,5 /usr/bin/python /home/pi/Desktop/WateringScript.py
+
+# Garden Music Cycle from 6AM-2PM
+0 6-14 * * * omxplayer /home/pi/Desktop/Music.mp3
+
+# 18HR Lights ON at 5AM
+0 5 * * * /usr/bin/python /home/pi/Desktop/18HR.py
+
+# 12HR Lights ON at 5AM
+0 5 * * * /usr/bin/python /home/pi/Desktop/12HR.py
+
+
